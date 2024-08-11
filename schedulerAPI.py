@@ -7,16 +7,20 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from flask import Flask, render_template, redirect, flash
+import pathlib
 
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
-FILE_PATH = '/Users/mago/Desktop/Projects/scheduler/static/xls'
-app.secret_key = "secret key"
-app.json.sort_keys = False
+BASE_DIR = pathlib.Path(__file__).parent.resolve()
 
-df = pd.read_excel(FILE_PATH + '/courses.xlsx')
+# Define file paths dynamically
+FILE_PATH = os.path.join(BASE_DIR, 'static', 'xls')
+CREDENTIALS_PATH = os.path.join(BASE_DIR, 'credentials.json')
+TOKEN_PATH = os.path.join(BASE_DIR, 'token.pickle')
+
+df = pd.read_excel(os.path.join(FILE_PATH, 'courses.xlsx'))
 df.columns = df.columns.str.strip()
 
 @app.route('/')
@@ -51,34 +55,32 @@ MESS_CALENDAR_SUMMARY = 'Mess by Scheduler'
 TIMEZONE = 'Asia/Kolkata'
 day_map = {'MO': 0, 'TU': 1, 'WE': 2, 'TH': 3, 'FR': 4, 'SA': 5, 'SU': 6}
 
-kadambdf = pd.read_excel(FILE_PATH + '/kadamb.xlsx')
+# Load mess data from Excel files
+kadambdf = pd.read_excel(os.path.join(FILE_PATH, 'kadamb.xlsx'))
 kadambdf.columns = kadambdf.columns.str.strip()
 
-northdf = pd.read_excel(FILE_PATH + '/north.xlsx')
+northdf = pd.read_excel(os.path.join(FILE_PATH, 'north.xlsx'))
 northdf.columns = northdf.columns.str.strip()
 
-southdf = pd.read_excel(FILE_PATH + '/south.xlsx')
+southdf = pd.read_excel(os.path.join(FILE_PATH, 'south.xlsx'))
 southdf.columns = southdf.columns.str.strip()
 
-yukdf = pd.read_excel(FILE_PATH + '/yuktahaar.xlsx')
+yukdf = pd.read_excel(os.path.join(FILE_PATH, 'yuktahaar.xlsx'))
 yukdf.columns = yukdf.columns.str.strip()
 
 def authcheck():
     creds = None
-
-    if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
+    if os.path.exists(TOKEN_PATH):
+        with open(TOKEN_PATH, 'rb') as token:
             creds = pickle.load(token)
 
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_PATH, SCOPES)
             creds = flow.run_local_server(port=0)
-
-        with open('token.pickle', 'wb') as token:
+        with open(TOKEN_PATH, 'wb') as token:
             pickle.dump(creds, token)
 
     return creds
@@ -160,10 +162,8 @@ def create_mess_events(service, calendar_id, df, mess_name):
 
             create_event(service, calendar_id, mess_name, meal_type, meal_description, daynum, day, start_time, end_time)
 
-
 @app.route('/Schedule/<int:semester>')
 def schedule(semester):
-
     creds = authcheck()
     service = build('calendar', 'v3', credentials=creds)
 
@@ -212,4 +212,4 @@ def schedule(semester):
     return redirect('https://calendar.google.com/calendar')
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug=True)
