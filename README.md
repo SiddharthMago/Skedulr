@@ -1,5 +1,5 @@
-To run the program in venv:
+### To run the program in venv:
 
-make install
-make run
-make clean
+#### make install
+#### make run
+#### make clean
