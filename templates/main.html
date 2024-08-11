@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="scheduler, courses, API, semester, course details" />
+  <meta name="description" content="A web application to schedule and view course details by semester and course code." />
+  <meta name="author" content="Siddharth Mago" />
+  <!-- Site icon-->
+  <link rel="icon" href="{{ url_for('static', filename='images/cal.png') }}" type="image/gif" />
+
+  <title>Scheduler</title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet" />
+  <!-- font awesome style -->
+  <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{{ url_for('static', filename='css/responsive.css') }}" rel="stylesheet" />
+
+</head>
+
+<body>
+
+  <div class="hero_area">
+    <!-- header section starts -->
+    <header class="header_section long_section px-0">
+      <nav class="navbar navbar-expand-lg custom_nav-container ">
+        <a class="navbar-brand" href="{{ url_for('init') }}">
+          <span>
+            Scheduler
+          </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class=""> </span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="d-flex mx-auto flex-column flex-lg-row align-items-center">
+            <ul class="navbar-nav  ">
+              <li class="nav-item active">
+                <a class="nav-link" href="https://github.com/SiddharthMago"><img src="{{ url_for('static', filename='images/github.png') }}"></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://www.iiit.ac.in"><img src="{{ url_for('static', filename='images/school.png') }}"></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://www.iiit.ac.in/academics/curriculum/undergraduate"><img src="{{ url_for('static', filename='images/syllabus.png') }}"></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://calendar.google.com/calendar"><img src="{{ url_for('static', filename='images/google-calendar.png') }}"></a>
+              </li>
+            </ul>
+          </div>
+          <div class="quote_btn-container">
+            <form class="form-inline">
+              <button class="btn my-2 my-sm-0 nav_search-btn" type="submit">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- end header section -->
+    <!-- slider section -->
+    <section class="slider_section long_section">
+      <div id="customCarousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="detail-box">
+                    <h1>
+                      Course Details
+                    </h1>
+                    <p>
+                      Get details about all your courses!
+                    </p>
+                    <div>
+                      <label class="mr-2">Select Semester:</label>
+                      <div class="semester d-flex align-items-center">
+                        <select id="semester-select" class="form-control mr-2" style="width: 45%;">
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                        </select>
+                        <a href="#" class="btn btn-primary custom-primary" onclick="semester_routing()">Get Courses</a>
+                      </div>
+                      <br>
+                      <label class="mr-2">Enter Course Code:</label>
+                      <div class="d-flex align-items-center">
+                        <form class="course-code mr-2" style="margin-bottom: 0;">
+                          <input type="text" class="form-control" placeholder="eg: CS0.101" style="width: 100%; display: inline-block;" id="course-code"></input>
+                        </form>
+                        <a href="#" class="btn btn-secondary custom-secondary" onclick="course_code_routing()">Get Course Details</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="img-box">
+                    <img class="cal" src="{{ url_for('static', filename='images/cal.png') }}" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="detail-box">
+                    <h1>
+                      Google Calendar Scheduler
+                    </h1>
+                    <p>
+                      Schedule your courses directly on your Google Calendar!
+                    </p>
+                    <label class="mr-2">Select Semester:</label>
+                      <div class="semester d-flex align-items-center">
+                          <select id="semester-select2" class="form-control mr-2" style="width: 45%;">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                          </select>
+                          <a href="#" class="btn btn-primary custom-3" onclick="calendar_routing()">Create Schedule</a>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="img-box">
+                    <img class = "googlecal" src="{{ url_for('static', filename='images/googlecal.png') }}" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ol class="carousel-indicators">
+          <li data-target="#customCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#customCarousel" data-slide-to="1"></li>
+        </ol>
+      </div>
+    </section>
+    <!-- end slider section -->
+  </div>
+
+  <!-- courses section -->
+  <section class="courses_section">
+    <div class="courses-container">
+      {% if courses %}
+      <div class="courses-text">
+        <p>Semester<span class="tab1"></span>Code<span class="tab3"></span>Course</p>
+        {% for course in courses %}
+          <pre class="tab"><span class="tab1"></span>{{ course['Semester'] }}<span class="tab2"></span>{{ course['Course Code'] }}<span class="tab2"></span>{{ course['Course'] }}</pre>
+        {% endfor %}
+      </div>
+      {% endif %}
+      
+      {% if semcourses %}
+      <div class="semcourses-text">
+        <p>Code<span class="tab3"></span>Course</p>
+        {% for course in semcourses %}
+          <p>{{ course['Course Code'] }}<span class="tab2"></span>{{ course['Course'] }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if course_details %}
+      <div class="course_details-text">
+        <p>Course Details:</p>
+          <p>Semester : {{ course_details['Semester'] }}</p>
+          <p>Code : {{ course_details['Course Code'] }}</p>
+          <p>Course : {{ course_details['Course'] }}</p>
+          <p>Professor : {{ course_details['Prof'] }}</p>
+          <p>Start Time : {{ course_details['Start'] }}</p>
+          <p>End Time : {{ course_details['End'] }}</p>
+          <p>Room : {{ course_details['Room'] }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+  <!-- end courses section -->
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <p>
+        &copy; <span id="displayYear"></span> All Rights Reserved By
+        <a href="https://html.design/">Siddharth Mago</a>
+      </p>
+    </div>
+  </footer>
+  <!-- footer section -->
+
+  <!-- jQery -->
+  <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+  <!-- bootstrap js -->
+  <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+  <!-- custom js -->
+  <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+
+</body>
+
+</html>
