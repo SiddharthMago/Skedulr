@@ -18,7 +18,7 @@ run: $(VENV_DIR)/bin/activate
 
 # Clean up the environment
 clean:
-	rm -rf $(VENV_DIR)
+	rm -rf $(VENV_DIR) token.pickle
 
 # Phony targets
 .PHONY: install run clean
