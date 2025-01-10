@@ -1,5 +1,6 @@
 import os
 import pickle
+import pathlib
 import pandas as pd
 from datetime import datetime, timedelta, time
 from google.auth.transport.requests import Request
@@ -10,7 +11,10 @@ from googleapiclient.discovery import build
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-FILE_PATH = '/Users/mago/Desktop/Projects/scheduler/static/xls'
+BASE_DIR = pathlib.Path(__file__).parent.resolve()
+
+# Define file paths dynamically
+FILE_PATH = os.path.join(BASE_DIR, 'static', 'xls')
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 CALENDAR_SUMMARY = 'Courses by Scheduler'
 TIMEZONE = 'Asia/Kolkata'

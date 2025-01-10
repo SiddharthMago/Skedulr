@@ -1,5 +1,6 @@
 import os
 import pickle
+import pathlib
 import pandas as pd
 from datetime import datetime, timedelta, time
 from googleapiclient.discovery import build
@@ -7,7 +8,6 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from flask import Flask, render_template, redirect, flash
-import pathlib
 
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
