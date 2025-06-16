@@ -1,6 +1,8 @@
 # 📅 IIITH Calendar Scheduler  
 **Lazy? Get your IIIT course info and daily timetable on your calendar in one click!**
 
+Preview at - ```https://siddharthmago.github.io/Skedulr/```
+
 <br>
 
 ## 🚀 Overview  
