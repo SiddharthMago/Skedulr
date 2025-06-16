@@ -1,6 +1,8 @@
 # 📅 IIITH Calendar Scheduler  
 **Lazy? Get your IIIT course info and daily timetable on your calendar in one click!**
 
+<br>
+
 ## 🚀 Overview  
 This project automates the process of syncing IIIT-Hyderabad students’ academic schedules with Google Calendar.  
 It parses course details and schedules, formats them into calendar events, and integrates them directly into a user’s Google Calendar — making it easy to stay organized without manually entering each event.
