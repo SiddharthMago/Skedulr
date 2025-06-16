@@ -3,4 +3,5 @@ token.pickle
 code/testing.py
 code/googleCal.py
 .DS_Store
+static/.DS_Store
 venv/
