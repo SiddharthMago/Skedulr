@@ -12,10 +12,8 @@ from flask import Flask, render_template, redirect, flash
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-app = Flask(__name__, static_folder='static', template_folder='templates')
-BASE_DIR = pathlib.Path(__file__).parent.resolve()
-
-# Define file paths dynamically
+app = Flask(__name__, static_folder='../static', template_folder='..')
+BASE_DIR = pathlib.Path(__file__).parent.parent.resolve()
 FILE_PATH = os.path.join(BASE_DIR, 'static', 'xls')
 CREDENTIALS_PATH = os.path.join(BASE_DIR, 'credentials.json')
 TOKEN_PATH = os.path.join(BASE_DIR, 'token.pickle')
@@ -25,13 +23,13 @@ df.columns = df.columns.str.strip()
 
 @app.route('/')
 def init():
-    return render_template("main.html", wait=True)
+    return render_template("index.html", wait=True)
 
 @app.route('/Courses')
 def courses():
     filtered_df = df[['Semester', 'Course Code', 'Course']]
     course_list = filtered_df.to_dict(orient='records')
-    return render_template("main.html", courses=course_list)
+    return render_template("index.html", courses=course_list)
 
 @app.route('/Courses/<int:semester>')
 def sem_courses(semester):
@@ -39,14 +37,14 @@ def sem_courses(semester):
     filtered_df = df[df['Semester'] == str(semester)]
     filtered_df = filtered_df[['Course Code', 'Course']]
     semcourses = filtered_df.to_dict(orient='records')
-    return render_template("main.html", semcourses=semcourses)
+    return render_template("index.html", semcourses=semcourses)
 
 @app.route('/Courses/<string:course_code>')
 def course_dets(course_code):
     filtered_df = df[df['Course Code'] == str(course_code)]
     course_details = filtered_df.to_dict(orient='records')
     course_details = course_details[0]
-    return render_template("main.html", course_details=course_details)
+    return render_template("index.html", course_details=course_details)
 
 # Calendar Scheduling:
 SCOPES = ['https://www.googleapis.com/auth/calendar']
@@ -212,4 +210,4 @@ def schedule(semester):
     return redirect('https://calendar.google.com/calendar')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
