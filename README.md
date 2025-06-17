@@ -123,6 +123,7 @@ Pull requests are welcome — just make sure your code is readable and documente
 ## 👨‍💻 Author
 
 Siddharth Mago
+
 Made with ❤️ for IIITH students  
 Contributions and bug reports are always appreciated!
 
